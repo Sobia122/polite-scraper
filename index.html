@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Polite Scraper Output</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background: #f4f6f8; }
+    h1 { color: #333; margin-bottom: 20px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+    .card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: space-between; }
+    .price { color: #2e7d32; font-weight: bold; font-size: 1.1em; }
+    .rating { color: #e67e22; font-weight: bold; }
+    a { color: #0066cc; text-decoration: none; margin-top: 10px; font-weight: bold; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Scraped Books (60 Records)</h1>
+  <div id="books" class="grid">Loading books...</div>
+
+  <script>
+    fetch('output/books.json')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('books');
+        container.innerHTML = '';
+        data.forEach(book => {
+          container.innerHTML += `
+            <div class="card">
+              <div>
+                <h3>${book.title}</h3>
+                <p class="price">£${book.price_gbp}</p>
+                <p class="rating">Rating: ${book.rating_text}</p>
+                <p>Status: ${book.availability_text}</p>
+              </div>
+              <a href="${book.product_url}" target="_blank">View on Website →</a>
+            </div>
+          `;
+        });
+      })
+      .catch(err => {
+        document.getElementById('books').innerHTML = '<p style="color:red">Failed to load data from output/books.json</p>';
+      });
+  </script>
+</body>
+</html>
