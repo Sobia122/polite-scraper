@@ -1,4 +1,4 @@
-# Polite Scraper API (BE-05)
+# Polite Scraper API 
 
 A polite, resilient web scraper built with Python, BeautifulSoup, and Pydantic. It collects 60 book records across 3 catalogue pages from Books to Scrape, validates each record against a strict schema, and generates execution reports without crashing on failures.
 
